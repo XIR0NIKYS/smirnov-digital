@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Artem Smirnov — Growth advisor for consumer mobile</title>
-  <meta name="description" content="I grow consumer mobile subscription apps. 10 years in the industry. $100M ARR. Seven services across competitive intelligence, gap closing, data quality, creatives, UA automation, funnels, and CRM." />
+  <title>Artem Smirnov — Growth advisor for consumer mobile apps</title>
+  <meta name="description" content="I grow consumer mobile subscription apps. 10 years in the industry. $100M ARR. Eight services across UA, creatives, funnels, monetisation, and more." />
   <meta name="theme-color" content="#121110" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,13 +46,6 @@
     .smr-row:hover .smr-title::after { transform: scaleX(1); }
     .smr-row .smr-arrow { transition: transform .22s cubic-bezier(.2,.7,.3,1); }
     .smr-row:hover .smr-arrow { transform: translateX(4px); }
-    .smr-seg { position: relative; }
-    .smr-seg .smr-pill {
-      position: absolute; top: 2px; bottom: 2px;
-      border-radius: 999px;
-      transition: transform .28s cubic-bezier(.4,1.3,.5,1), width .28s cubic-bezier(.4,1.3,.5,1);
-      will-change: transform, width;
-    }
     .smr-icon-stack { position: relative; width: 14px; height: 14px;
                       display: inline-flex; align-items: center; justify-content: center; }
     .smr-icon-stack > svg {
@@ -70,6 +63,75 @@
     @media (prefers-reduced-motion: reduce) {
       .smr-reveal, .smr-reveal.in, .smr-page, .smr-eyebrow-rule { animation: none !important; }
       .smr-reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ── Mobile layout (≤640px) ──────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .smr-section-head-prominent .smr-section-h {
+        font-size: 30px !important; line-height: 1.08 !important;
+      }
+      .smr-section-head-prominent .smr-section-note {
+        font-size: 15px !important;
+      }
+
+      .smr-page-wrap { padding: 0 16px !important; }
+      .smr-hdr-inner { padding: 12px 16px !important; gap: 8px !important; }
+      .smr-hdr-back  { padding: 4px 9px 4px 7px !important; font-size: 11px !important; }
+
+      .smr-page section { padding-top: 40px !important; padding-bottom: 40px !important; }
+
+      .smr-page > section:first-of-type h1 {
+        font-size: 28px !important; line-height: 1.1 !important;
+        letter-spacing: -0.018em !important;
+        margin-bottom: 22px !important;
+      }
+      .smr-page > section:first-of-type > p:last-of-type {
+        font-size: 15px !important;
+      }
+
+      .smr-page [style*="margin-left: 58px"]    { margin-left: 0 !important; }
+      .smr-page [style*="margin: 0px 0px 14px 58px"] { margin: 0 0 14px 0 !important; }
+      .smr-page [style*="margin: 10px 0px 0px 58px"]{ margin: 10px 0 0 0 !important; }
+      .smr-page [style*="margin: 0px 0px 0px 58px"]   { margin: 0 !important; }
+
+      .smr-page [style*="grid-template-columns: 44px 1fr;"] {
+        display: block !important;
+      }
+      .smr-page [style*="grid-template-columns: 44px 1fr;"] > :first-child:not(:empty) {
+        display: block !important;
+        margin-bottom: 6px !important;
+        padding-top: 0 !important;
+      }
+
+      .smr-page button[style*="grid-template-columns: 44px 1fr 28px"] {
+        grid-template-columns: 24px 1fr 16px !important;
+        gap: 10px !important;
+      }
+
+      .smr-page [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      .smr-page [style*="max-width: 580"],
+      .smr-page [style*="max-width: 560"],
+      .smr-page [style*="max-width: 500"],
+      .smr-page [style*="max-width: 600"],
+      .smr-page [style*="max-width: 480"],
+      .smr-page [style*="max-width: 420"] {
+        max-width: 100% !important;
+      }
+
+      .smr-page [style*="min-height: 92"] {
+        min-height: 0 !important;
+        padding: 14px 14px !important;
+      }
+
+      .smr-page [style*="padding: 24px 24px"],
+      .smr-page [style*="padding: 22px 22px"] {
+        padding: 18px 16px !important;
+      }
+
+      .smr-page nav > button { padding: 16px 16px !important; }
     }
   </style>
 </head>
@@ -169,8 +231,8 @@ function ThemeButton({ T, dark, setDark }) {
   );
 }
 
-// ── Header w/ scroll shadow ──────────────────────────────────────────
-function Header({ T, lang, setLang, dark, setDark, setPage }) {
+// ── Header w/ scroll shadow + contextual back-pill ───────────────────
+function Header({ T, dark, setDark, setPage, page, L }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 4);
@@ -178,6 +240,7 @@ function Header({ T, lang, setLang, dark, setDark, setPage }) {
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+  const onDetail = page !== "home";
   return (
     <header className={"smr-hdr" + (scrolled ? " scrolled" : "")} style={{
       position: "sticky", top: 0, zIndex: 10,
@@ -185,16 +248,53 @@ function Header({ T, lang, setLang, dark, setDark, setPage }) {
       borderBottom: `1px solid ${T.rule}`,
       transition: "box-shadow .25s ease, border-color .25s",
     }}>
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "14px 28px",
-                    display: "flex", alignItems: "baseline", justifyContent: "space-between",
+      <div className="smr-hdr-inner" style={{ maxWidth: 800, margin: "0 auto", padding: "14px 28px",
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
                     gap: 16 }}>
-        <button onClick={() => setPage("home")} style={{
-          background: "none", border: 0, padding: 0, cursor: "pointer",
-          color: T.fg, font: "inherit", display: "flex", alignItems: "baseline", gap: 8,
-          letterSpacing: "-0.012em",
-        }}>
-          <span style={{ fontWeight: 600, fontSize: 15 }}>{C.name}</span>
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
+          {!onDetail && (
+            <button onClick={() => setPage("home")} style={{
+              background: "none", border: 0, padding: 0, cursor: "pointer",
+              color: T.fg, font: "inherit", display: "flex", alignItems: "baseline", gap: 8,
+              letterSpacing: "-0.012em",
+            }}>
+              <span style={{ fontWeight: 600, fontSize: 15, whiteSpace: "nowrap" }}>{C.name}</span>
+            </button>
+          )}
+          {onDetail && (
+            <button
+              onClick={() => setPage("home")}
+              className="smr-hdr-back"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                background: T.bgElev, color: T.fg,
+                border: `1px solid ${T.rule}`, borderRadius: 999,
+                padding: "5px 11px 5px 9px",
+                font: "inherit", fontSize: 12,
+                fontFamily: FONTS.mono, letterSpacing: "0.02em",
+                cursor: "pointer",
+                whiteSpace: "nowrap", flexShrink: 0,
+                transition: "background .2s, border-color .2s, transform .2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = T.ruleStrong;
+                const a = e.currentTarget.querySelector('.smr-hdr-arrow');
+                if (a) a.style.transform = 'translateX(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = T.rule;
+                const a = e.currentTarget.querySelector('.smr-hdr-arrow');
+                if (a) a.style.transform = 'translateX(0)';
+              }}
+            >
+              <span className="smr-hdr-arrow"
+                    style={{ display: "inline-block", transition: "transform .2s",
+                              color: T.muted }}>←</span>
+              {L.allServices}
+            </button>
+          )}
+        </div>
+
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <ThemeButton T={T} dark={dark} setDark={setDark} />
         </div>
@@ -220,8 +320,38 @@ function TgLink({ T, label, big }) {
   );
 }
 
-// ── Section head ─────────────────────────────────────────────────────
-function SectionHead({ T, index, title, note }) {
+// ── Section head (compact + prominent variants) ──────────────────────
+function SectionHead({ T, index, title, note, prominent }) {
+  if (prominent) {
+    return (
+      <div className="smr-section-head-prominent" style={{ marginBottom: 40 }}>
+        <p style={{
+          fontFamily: FONTS.mono, fontSize: 11, color: T.muted,
+          letterSpacing: "0.12em", textTransform: "uppercase",
+          margin: "0 0 14px",
+          display: "flex", alignItems: "center", gap: 10,
+        }}>
+          <span className="smr-eyebrow-rule"
+                style={{ display: "inline-block", width: 24, height: 1,
+                          background: T.muted }} />
+          {index}
+        </p>
+        <h2 className="smr-section-h"
+            style={{
+              fontSize: 38, fontWeight: 500, margin: 0,
+              letterSpacing: "-0.022em", lineHeight: 1.05,
+              color: T.fg, textWrap: "balance",
+            }}>{title}</h2>
+        {note && (
+          <p className="smr-section-note"
+             style={{
+               color: T.fgSoft, fontSize: 17, lineHeight: 1.45,
+               margin: "16px 0 0", maxWidth: 540, textWrap: "pretty",
+             }}>{note}</p>
+        )}
+      </div>
+    );
+  }
   return (
     <div style={{ marginBottom: 26 }}>
       <div style={{
@@ -297,7 +427,7 @@ function Home({ T, lang, L, setPage }) {
 
       <section style={{ padding: `${D.sectionGap}px 0`, borderBottom: `1px solid ${T.rule}` }}>
         <Reveal><SectionHead T={T} index="01 / Services"
-                              title={L.servicesTitle} note={L.servicesIntro} /></Reveal>
+                              title={L.servicesTitle} note={L.servicesIntro} prominent /></Reveal>
         <ol style={{ listStyle: "none", padding: 0, margin: "8px 0 0",
                      borderTop: `1px solid ${T.rule}` }}>
           {SERVICES.map((s, i) => {
@@ -314,8 +444,8 @@ function Home({ T, lang, L, setPage }) {
       </section>
 
       <section style={{ padding: `${D.sectionGap}px 0`, borderBottom: `1px solid ${T.rule}` }}>
-        <Reveal><SectionHead T={T} index="02 / About" title={L.aboutTitle} /></Reveal>
-        <div style={{ marginLeft: 58, maxWidth: 580 }}>
+        <Reveal><SectionHead T={T} index="02 / About" title={L.aboutTitle} prominent /></Reveal>
+        <div style={{ maxWidth: 580 }}>
           {L.aboutBody.map((p, i) => (
             <Reveal as="p" key={i} delay={i * 70}
                     style={{ margin: "0 0 14px", color: T.fgSoft,
@@ -326,26 +456,40 @@ function Home({ T, lang, L, setPage }) {
         <div style={{ marginTop: 36 }}>
           <Reveal as="p" style={{ fontFamily: FONTS.mono, fontSize: 11, color: T.muted,
                                    letterSpacing: "0.06em", textTransform: "uppercase",
-                                   margin: "0 0 14px 58px" }}>{L.capabilitiesTitle}</Reveal>
-          <dl style={{ margin: "0 0 0 58px", padding: 0,
-                       borderTop: `1px solid ${T.rule}` }}>
+                                   margin: "0 0 14px" }}>{L.capabilitiesTitle}</Reveal>
+          <div style={{
+            margin: 0, padding: 0,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridAutoRows: "1fr",
+            border: `1px solid ${T.rule}`,
+            borderRadius: 4,
+            overflow: "hidden",
+            background: T.rule,
+            gap: 1,
+          }}>
             {L.capabilities.map(([k, v], i) => (
               <Reveal as="div" key={k} delay={i * 50} style={{
-                display: "grid", gridTemplateColumns: "200px 1fr",
-                gap: 16, padding: "12px 0",
-                borderBottom: `1px solid ${T.rule}`,
+                padding: "16px 18px",
+                background: T.bg,
+                display: "flex",
+                flexDirection: "column",
+                gap: 6,
+                minHeight: 92,
               }}>
-                <dt style={{ fontWeight: 500, fontSize: 14, color: T.fg }}>{k}</dt>
-                <dd style={{ margin: 0, color: T.muted, fontSize: 14, textWrap: "pretty" }}>{v}</dd>
+                <div style={{ fontWeight: 500, fontSize: 14, color: T.fg,
+                               letterSpacing: "-0.005em" }}>{k}</div>
+                <div style={{ margin: 0, color: T.muted, fontSize: 14, lineHeight: 1.45,
+                               textWrap: "pretty" }}>{v}</div>
               </Reveal>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
       <section style={{ padding: `${D.sectionGap}px 0` }}>
-        <Reveal><SectionHead T={T} index="03 / Contact" title={L.contactTitle} /></Reveal>
-        <Reveal delay={80} style={{ marginLeft: 58, maxWidth: 580,
+        <Reveal><SectionHead T={T} index="03 / Contact" title={L.contactTitle} prominent /></Reveal>
+        <Reveal delay={80} style={{ maxWidth: 580,
                                      padding: "24px 24px",
                                      border: `1px solid ${T.rule}`, borderRadius: 4,
                                      background: T.bgElev }}>
@@ -402,11 +546,6 @@ function DetailBlock({ T, index, title, items, body, numbered }) {
   );
 }
 
-const linkBtn = (T) => ({
-  background: "none", border: 0, padding: 0, cursor: "pointer",
-  font: "inherit", color: T.fg, fontSize: 13,
-});
-
 // ── Detail page ──────────────────────────────────────────────────────
 function Detail({ T, lang, L, setPage, sid }) {
   const idx = SERVICES.findIndex((s) => s.id === sid);
@@ -417,16 +556,12 @@ function Detail({ T, lang, L, setPage, sid }) {
   return (
     <main className="smr-page" style={{ paddingBottom: D.sectionGap }}>
       <div style={{ paddingTop: 28, paddingBottom: 28, borderBottom: `1px solid ${T.rule}` }}>
-        <button onClick={() => setPage("home")} className="smr-tg" style={{
-          background: "none", border: 0, padding: 0, cursor: "pointer",
+        <span style={{
           color: T.muted, font: "inherit", fontSize: 11, fontFamily: FONTS.mono,
           letterSpacing: "0.06em", textTransform: "uppercase",
-          display: "inline-flex", alignItems: "center", gap: 8,
         }}>
-          <span className="smr-tg-arrow"
-                style={{ display: "inline-block", transform: "rotate(180deg)" }}>↗</span>
-          {L.allServices}
-        </button>
+          {L.servicesTitle} / {String(idx + 1).padStart(2, "0")} · {sl.short}
+        </span>
       </div>
 
       <section style={{ padding: `${D.sectionGap}px 0`, borderBottom: `1px solid ${T.rule}` }}>
@@ -457,7 +592,7 @@ function Detail({ T, lang, L, setPage, sid }) {
         </p>
       </section>
 
-      <DetailBlock T={T} index="A" title={L.detailWhat} items={sl.delivers} />
+      <DetailBlock T={T} index="A" title={L.detailWhat} items={sl.delivers} numbered />
       <DetailBlock T={T} index="B" title={L.detailHow}  items={sl.how} numbered />
       <DetailBlock T={T} index="C" title={L.detailPricing} body={sl.pricing} />
 
@@ -473,25 +608,76 @@ function Detail({ T, lang, L, setPage, sid }) {
         </Reveal>
       </section>
 
-      <nav style={{ borderTop: `1px solid ${T.rule}`, padding: "22px 0 0",
-                     display: "flex", justifyContent: "space-between", gap: 16,
-                     fontSize: 13, color: T.fg }}>
-        <button onClick={() => setPage("home")} className="smr-tg" style={linkBtn(T)}>
-          <span className="smr-tg-arrow"
-                style={{ display: "inline-block", color: T.muted, marginRight: 6,
-                          transform: "rotate(180deg)" }}>↗</span>
-          {L.allServices}
-        </button>
-        <button onClick={() => setPage(next.id)} className="smr-tg"
-                style={{ ...linkBtn(T), textAlign: "right" }}>
+      <nav style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: 1,
+        background: T.rule,
+        border: `1px solid ${T.rule}`,
+        borderRadius: 4,
+        overflow: "hidden",
+        marginTop: 24,
+      }}>
+        <button
+          onClick={() => setPage("home")}
+          className="smr-navcard smr-navcard-prev"
+          style={{
+            background: T.bg, border: 0, padding: "18px 20px",
+            cursor: "pointer", font: "inherit", color: T.fg,
+            textAlign: "left", display: "flex", flexDirection: "column",
+            gap: 6, transition: "background .2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = T.bgElev;
+            const a = e.currentTarget.querySelector('.smr-navcard-arrow');
+            if (a) a.style.transform = 'translateX(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = T.bg;
+            const a = e.currentTarget.querySelector('.smr-navcard-arrow');
+            if (a) a.style.transform = 'translateX(0)';
+          }}
+        >
           <span style={{ color: T.muted, fontSize: 11, fontFamily: FONTS.mono,
-                          letterSpacing: "0.05em", textTransform: "uppercase",
-                          display: "block", marginBottom: 4 }}>
+                          letterSpacing: "0.06em", textTransform: "uppercase" }}>
+            {lang === "ru" ? "Назад" : "Back"}
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "baseline", gap: 8,
+                          fontSize: D.baseSize + 1, fontWeight: 500, letterSpacing: "-0.01em" }}>
+            <span className="smr-navcard-arrow" style={{ color: T.muted,
+                          transition: "transform .22s cubic-bezier(.2,.7,.3,1)" }}>←</span>
+            {L.allServices}
+          </span>
+        </button>
+        <button
+          onClick={() => setPage(next.id)}
+          className="smr-navcard smr-navcard-next"
+          style={{
+            background: T.bg, border: 0, padding: "18px 20px",
+            cursor: "pointer", font: "inherit", color: T.fg,
+            textAlign: "right", display: "flex", flexDirection: "column",
+            gap: 6, alignItems: "flex-end", transition: "background .2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = T.bgElev;
+            const a = e.currentTarget.querySelector('.smr-navcard-arrow');
+            if (a) a.style.transform = 'translateX(3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = T.bg;
+            const a = e.currentTarget.querySelector('.smr-navcard-arrow');
+            if (a) a.style.transform = 'translateX(0)';
+          }}
+        >
+          <span style={{ color: T.muted, fontSize: 11, fontFamily: FONTS.mono,
+                          letterSpacing: "0.06em", textTransform: "uppercase" }}>
             {L.nextService}
           </span>
-          <span style={{ display: "inline-flex", alignItems: "baseline", gap: 6 }}>
+          <span style={{ display: "inline-flex", alignItems: "baseline", gap: 8,
+                          fontSize: D.baseSize + 1, fontWeight: 500, letterSpacing: "-0.01em" }}>
             {next[lang].short}
-            <span className="smr-tg-arrow" style={{ display: "inline-block" }}>↗</span>
+            <span className="smr-navcard-arrow" style={{ color: T.muted,
+                          transition: "transform .22s cubic-bezier(.2,.7,.3,1)" }}>→</span>
           </span>
         </button>
       </nav>
@@ -535,9 +721,8 @@ function Site() {
       fontSize: D.baseSize, lineHeight: 1.5, minHeight: "100vh",
       transition: "background .35s ease, color .35s ease",
     }}>
-      <Header T={T} lang={lang} setLang={setLang}
-              dark={dark} setDark={setDark} setPage={setPage} />
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: `0 ${D.pad}px` }}>
+      <Header T={T} dark={dark} setDark={setDark} setPage={setPage} page={page} L={L} />
+      <div className="smr-page-wrap" style={{ maxWidth: 800, margin: "0 auto", padding: `0 ${D.pad}px` }}>
         <React.Fragment key={page}>
           {page === "home"
             ? <Home   T={T} lang={lang} L={L} setPage={setPage} />
