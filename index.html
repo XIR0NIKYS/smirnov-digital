@@ -68,7 +68,7 @@
     /* ── Mobile layout (≤640px) ──────────────────────────────────────── */
     @media (max-width: 640px) {
       .smr-section-head-prominent .smr-section-h {
-        font-size: 30px !important; line-height: 1.08 !important;
+        font-size: 24px !important; line-height: 1.1 !important;
       }
       .smr-section-head-prominent .smr-section-note {
         font-size: 15px !important;
@@ -338,8 +338,8 @@ function SectionHead({ T, index, title, note, prominent }) {
         </p>
         <h2 className="smr-section-h"
             style={{
-              fontSize: 38, fontWeight: 500, margin: 0,
-              letterSpacing: "-0.022em", lineHeight: 1.05,
+              fontSize: 30, fontWeight: 500, margin: 0,
+              letterSpacing: "-0.02em", lineHeight: 1.08,
               color: T.fg, textWrap: "balance",
             }}>{title}</h2>
         {note && (
@@ -687,12 +687,39 @@ function Detail({ T, lang, L, setPage, sid }) {
 
 // ── Site state w/ localStorage persistence ───────────────────────────
 function useSite() {
-  const [page, setPage] = useState("home");
+  const readHash = () => {
+    const h = typeof window !== "undefined"
+      ? window.location.hash.replace(/^#/, "")
+      : "";
+    if (!h) return "home";
+    return SERVICES.some((s) => s.id === h) ? h : "home";
+  };
+
+  const [page, setPageState] = useState(readHash);
   const [lang, setLang] = useState("en");
   const [dark, setDark] = useState(() => {
     try { const v = localStorage.getItem("smr-theme"); return v ? v === "dark" : true; }
     catch (e) { return true; }
   });
+
+  useEffect(() => {
+    const initial = page === "home" ? "" : "#" + page;
+    if (typeof window !== "undefined" && window.location.hash !== initial) {
+      window.history.replaceState({ page }, "", initial || window.location.pathname);
+    }
+    const onPop = () => setPageState(readHash());
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  const setPage = React.useCallback((next) => {
+    setPageState(next);
+    const hash = next === "home" ? "" : "#" + next;
+    if (typeof window !== "undefined" && window.location.hash !== hash) {
+      window.history.pushState({ page: next }, "", hash || window.location.pathname);
+    }
+  }, []);
+
   useEffect(() => {
     try { localStorage.setItem("smr-theme", dark ? "dark" : "light"); } catch (e) {}
   }, [dark]);
