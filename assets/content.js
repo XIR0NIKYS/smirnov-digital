@@ -1,4 +1,4 @@
-// Site content — bilingual RU/EN + 8 services with detail content.
+// Site content — bilingual RU/EN + 9 services with detail content.
 // (Site currently renders EN only; RU strings kept for future re-enablement.)
 window.SITE_CONTENT = {
   name: "Artem Smirnov",
@@ -29,7 +29,7 @@ window.SITE_CONTENT = {
       ["Predictive analytics", "pLTV, retention forecasting, unit-экономика."],
     ],
     servicesTitle: "Услуги",
-    servicesIntro: "Восемь услуг. Фикс, % от спенда, или микс. Цены под задачу.",
+    servicesIntro: "Девять услуг. Фикс, % от спенда, или микс. Цены под задачу.",
     detailWhat: "Что получаете",
     detailHow: "Как работаем",
     detailPricing: "Оплата",
@@ -67,7 +67,7 @@ window.SITE_CONTENT = {
       ["Market & Competitive Intelligence", "How consumer tech is actually growing. What's real, what's noise."],
     ],
     servicesTitle: "Services",
-    servicesIntro: "Eight services. Fixed fee, % of spend, or a mix. Pricing sized to the problem.",
+    servicesIntro: "Nine services. Fixed fee, % of spend, or a mix. Pricing sized to the problem.",
     detailWhat: "What you get",
     detailHow: "How it works",
     detailPricing: "Compensation",
@@ -117,6 +117,47 @@ window.SITE_CONTENT = {
           "Rebate начинает возвращаться со следующего биллингового цикла.",
         ],
         pricing: "% от суммы rebate. Платите, только когда деньги вернулись к вам.",
+      },
+    },
+    {
+      id: "recovery",
+      en: {
+        short: "Recover a Disabled Ad Account / Business Manager",
+        line: "Get your blocked Meta or Google ad account back.",
+        pitch: "I can recover any disabled ad account, Business Manager, or other ad asset — regardless of the reason for the block. Policy violation, suspected fraud, payment issue, mass disable wave: I work through proven recovery channels to bring assets back online fast.",
+        delivers: [
+          "Diagnosis of the block reason and recovery path.",
+          "Recovery of the disabled ad account, BM, or page.",
+          "Direct escalation through proven recovery channels.",
+          "Guidance on what to fix so it does not happen again.",
+          "Backup plan if the asset can't be recovered cleanly.",
+        ],
+        how: [
+          "You share asset details and the block notice.",
+          "I assess the case and tell you upfront whether it is recoverable.",
+          "I run the recovery process end-to-end.",
+          "Asset is back online. We debrief on prevention.",
+        ],
+        pricing: "Fixed fee per recovered asset. You pay only on success.",
+      },
+      ru: {
+        short: "Recover a Disabled Ad Account / Business Manager",
+        line: "Получите разблокировку вашего рекламного аккаунта Meta или Google.",
+        pitch: "Разблокирую любой ad-аккаунт, Business Manager или другой рекламный ассет — независимо от причины блокировки. Policy violation, подозрение на фрод, проблема с платёжом, массовый бан — работаю через проверенные каналы recovery.",
+        delivers: [
+          "Диагноз причины блокировки и пути recovery.",
+          "Разблокировка ad-аккаунта, BM или страницы.",
+          "Прямая эскалация через проверенные каналы recovery.",
+          "Рекомендации, что починить, чтобы это не повторилось.",
+          "Запасной план, если ассет не вернуть чисто.",
+        ],
+        how: [
+          "Вы даёте детали ассета и уведомление о блокировке.",
+          "Я оцениваю кейс и сразу говорю, возвратимо ли это.",
+          "Я веду процесс recovery от и до.",
+          "Ассет возвращён. Разбираем, как не повторить.",
+        ],
+        pricing: "Фикс за возвращённый ассет. Платите только за результат.",
       },
     },
     {
