@@ -3,8 +3,12 @@
 window.SITE_CONTENT = {
   name: "Artem Smirnov",
   domain: "smirnov.digital",
+  email: "artem@smirnov.digital",
+  emailUrl: "mailto:artem@smirnov.digital",
   telegram: "@smirnovHQ",
   telegramUrl: "https://t.me/smirnovHQ",
+  linkedin: "linkedin.com/in/artyom-smirnov",
+  linkedinUrl: "https://www.linkedin.com/in/artyom-smirnov/",
 
   ru: {
     nav: { services: "Услуги", about: "О себе", contact: "Контакты", back: "Назад" },
@@ -34,7 +38,7 @@ window.SITE_CONTENT = {
     detailHow: "Как работаем",
     detailPricing: "Оплата",
     contactTitle: "Связаться",
-    contactBody: "Пишите в Telegram. Опишите задачу в двух абзацах — отвечу, что можно сделать.",
+    contactBody: "Напишите мне. Опишите задачу в двух абзацах — отвечу, что можно сделать.",
     personal: "Вне работы: пробежал полный марафон, 42.2 км.",
     writeMe: "Написать в Telegram",
     back: "← Назад",
@@ -72,7 +76,7 @@ window.SITE_CONTENT = {
     detailHow: "How it works",
     detailPricing: "Compensation",
     contactTitle: "Get in touch",
-    contactBody: "Message me on Telegram. Two paragraphs on the problem and I'll reply with what's possible.",
+    contactBody: "Reach out where you prefer. Two paragraphs on the problem and I'll reply with what's possible.",
     personal: "Outside work: finished a full marathon, 42.2 km.",
     writeMe: "Message on Telegram",
     back: "← Back",
