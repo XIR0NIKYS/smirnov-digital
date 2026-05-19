@@ -78,7 +78,7 @@
       .smr-hdr-inner { padding: 12px 16px !important; gap: 8px !important; }
       .smr-hdr-back  { padding: 4px 9px 4px 7px !important; font-size: 11px !important; }
 
-      .smr-page section { padding-top: 40px !important; padding-bottom: 40px !important; }
+      .smr-page section { padding-top: 28px !important; padding-bottom: 28px !important; }
 
       .smr-page > section:first-of-type h1 {
         font-size: 28px !important; line-height: 1.1 !important;
@@ -132,6 +132,14 @@
       }
 
       .smr-page nav > button { padding: 16px 16px !important; }
+      .smr-page nav > button.smr-navcard-next {
+        text-align: left !important;
+        align-items: flex-start !important;
+      }
+      .smr-page nav { gap: 0 !important; }
+      .smr-page nav > button.smr-navcard-prev {
+        border-bottom: 1px solid var(--smr-rule, rgba(0,0,0,.1)) !important;
+      }
     }
   </style>
 </head>
@@ -378,7 +386,7 @@ function ServiceRow({ T, num, short, line, onClick }) {
       border: 0, padding: `${D.rowY}px 0`, cursor: "pointer",
       font: "inherit", color: T.fg, textAlign: "left", width: "100%",
       display: "grid", gridTemplateColumns: "44px 1fr 28px",
-      gap: 14, alignItems: "baseline",
+      gap: 14, alignItems: "start",
       transition: "background .2s",
     }}>
       <span className="smr-num" style={{
