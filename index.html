@@ -140,6 +140,23 @@
       .smr-page nav > button.smr-navcard-prev {
         border-bottom: 1px solid var(--smr-rule, rgba(0,0,0,.1)) !important;
       }
+
+      /* Contact links: stack label above link so long emails / linkedin
+         URLs don't wrap awkwardly next to the label. */
+      .smr-contact-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+        padding-bottom: 12px;
+      }
+      .smr-contact-item:not(:last-child) {
+        border-bottom: 1px solid var(--smr-rule, rgba(0,0,0,.08));
+      }
+      .smr-contact-item a {
+        max-width: 100%;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+      }
     }
   </style>
 </head>
@@ -308,6 +325,48 @@ function Header({ T, dark, setDark, setPage, page, L }) {
         </div>
       </div>
     </header>
+  );
+}
+
+// ── Contact links (Email / Telegram / LinkedIn) ──────────────────────
+function ContactLinks({ T, big }) {
+  const items = [
+    { kind: "Email",    label: C.email,    href: C.emailUrl,    external: false },
+    { kind: "Telegram", label: C.telegram, href: C.telegramUrl, external: true },
+    { kind: "LinkedIn", label: C.linkedin, href: C.linkedinUrl, external: true },
+  ];
+  return (
+    <ul style={{
+      listStyle: "none", margin: 0, padding: 0,
+      display: "flex", flexDirection: "column", gap: big ? 10 : 8,
+    }}>
+      {items.map((it) => (
+        <li key={it.kind} className="smr-contact-item"
+            style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+          <span style={{
+            fontFamily: FONTS.mono, fontSize: 10,
+            color: T.muted, letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            minWidth: 64, flexShrink: 0,
+          }}>{it.kind}</span>
+          <a className="smr-tg" href={it.href}
+             target={it.external ? "_blank" : undefined}
+             rel={it.external ? "noreferrer" : undefined}
+             style={{
+               color: T.fg, textDecoration: "none",
+               borderBottom: `1px solid ${T.fg}`, paddingBottom: 2,
+               display: "inline-flex", alignItems: "baseline", gap: 6,
+               fontSize: big ? 17 : 15, fontWeight: big ? 500 : 400,
+             }}>
+            {it.label}
+            {it.external && (
+              <span aria-hidden className="smr-tg-arrow"
+                    style={{ display: "inline-block" }}>↗</span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -503,7 +562,7 @@ function Home({ T, lang, L, setPage }) {
                                      background: T.bgElev }}>
           <p style={{ margin: "0 0 16px", color: T.fgSoft, fontSize: D.baseSize,
                        textWrap: "pretty" }}>{L.contactBody}</p>
-          <TgLink T={T} big label={`Telegram · ${C.telegram}`} />
+          <ContactLinks T={T} big />
         </Reveal>
       </section>
     </main>
@@ -612,7 +671,7 @@ function Detail({ T, lang, L, setPage, sid }) {
           <p style={{ margin: "0 0 14px", color: T.fgSoft, fontSize: D.baseSize }}>
             {lang === "ru" ? "Подходит под вашу задачу?" : "Sounds like a fit?"}
           </p>
-          <TgLink T={T} big label={L.writeMe} />
+          <ContactLinks T={T} big />
         </Reveal>
       </section>
 
